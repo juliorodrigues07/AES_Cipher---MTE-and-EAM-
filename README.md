@@ -1,7 +1,7 @@
 # AES Cipher - MTE and EAM
 Atividade da disciplina de Introdução à Criptografia - DCOMP - UFSJ
 
- Implementação de algoritmos de encriptação e decriptação autenticada nos modos MAC-then-Encrypt e Encrypt-and-MAC utilizando a cifra de bloco simétrica AES com chaves de 128 bits e a função Hash criptográfica SHA256.
+ Implementação de algoritmos de encriptação e decriptação autenticada nos modos MAC-then-Encrypt e Encrypt-and-MAC utilizando a cifra de bloco simétrica AES com chaves de 128 bits com modo de operação Cipher Block Chaining (CBC) e a função Hash criptográfica SHA256.
  
  # Requisitos
  
