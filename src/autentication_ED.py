@@ -1,35 +1,9 @@
 from Cryptodome.Cipher import AES
 from Cryptodome.Hash import HMAC
 from Cryptodome.Hash import SHA256
-from Cryptodome.Random import get_random_bytes
-
-# -------------------------------------------------  Auxiliares  ------------------------------------------------------
-
-
-def key_generator():
-
-    key = get_random_bytes(16)
-    return key
-
-
-def padding(message):
-
-    message += b'\x01'
-
-    while len(message) % 16 != 0:
-        message += b'\x00'
-
-    return message
-
-
-def unpadding(message):
-
-    i = len(message) - 1
-
-    while message[i] != 1:
-        i = i - 1
-
-    return message[:i]
+from key_and_padding import key_generator
+from key_and_padding import padding
+from key_and_padding import unpadding
 
 
 # -------------------------------------------  ETM --> Encrypt-then-MAC  ----------------------------------------------
@@ -143,61 +117,3 @@ def MTE_decrypt(info, key):
         return
 
     return unpadding(message)
-
-
-# ---------------------------------------------------  MAIN  ---------------------------------------------------------
-
-if __name__ == '__main__':
-
-    # ------------------------------------------  Encrypt-and-MAC  ---------------------------------------------------
-
-    message = b'Introducao a Criptografia'
-    print("\nEncrypt-and-MAC:\n")
-    print("Mensagem original:   ", message)
-
-    info, key = EAM_encrypt(message)
-    print("\nENCRIPTAÇÃO")
-    print("Vetor inicialização: ", info[:16])
-    print("Tag:                 ", info[16:48])
-    print("Texto cifrado:       ", info[48:])
-    print("Chave secreta:       ", key)
-
-    decrypted_message = EAM_decrypt(info, key)
-    print("\nDECRIPTAÇÃO")
-    print("Mensagem decriptada: ", decrypted_message)
-
-    # ------------------------------------------  MAC-then-Encrypt  ---------------------------------------------------
-
-    message = b'Universidade Federal de Sao Joao Del Rei'
-    print("\n\nMAC-then-Encrypt \n")
-    print("Mensagem original:   ", message)
-
-    info, key, tag = MTE_encrypt(message)
-    print("\nENCRIPTAÇÃO")
-    print("Vetor inicialização: ", info[:16])
-    print("Texto Cifrado:       ", info[16:])
-    print("Tag:                 ", tag)
-    print("Chave Secreta:       ", key)
-
-    decrypted_message = MTE_decrypt(info, key)
-    print("\nDECRIPTAÇÃO")
-    print("Mensagem decriptada: ", decrypted_message)
-
-    # ------------------------------------------  Encrypt-then-MAC  ---------------------------------------------------
-
-    message = b'Ciencia da Computacao'
-    print("\n\nEncrypt-then-MAC \n")
-    print("Mensagem original:   ", message)
-
-    info, cipher_key, hmac_key = ETM_encrypt(message)
-    print("\nENCRIPTAÇÃO")
-    print("Vetor Inicialização: ", info[:16])
-    print("Tag:                 ", info[16:48])
-    print("Texto Cifrado:       ", info[48:])
-    print("Chave secreta(cifra):", cipher_key)
-    print("Chave secreta(HMAC): ", hmac_key)
-
-    decrypted_message = ETM_decrypt(info, cipher_key, hmac_key)
-    print("\nDECRIPTAÇÃO")
-    print("Mensagem decriptada: ", decrypted_message)
-
