@@ -7,7 +7,7 @@ Atividade da disciplina de Introdução à Criptografia - DCOMP - UFSJ
  
  # Requisitos
  
-- [Python](https://python.org) 2.x ou 3.x
+- [Python](https://python.org) 2.5 ou 3.7 ou superior
  
 - Biblioteca [PyCryptodome](https://pycryptodome.readthedocs.io/en/latest/src/introduction.html)
  
